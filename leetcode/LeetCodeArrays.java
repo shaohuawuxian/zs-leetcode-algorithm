@@ -21,7 +21,7 @@ public class LeetCodeArrays {
      * @param target
      * @return
      */
-    public int[] twoSum(int[] nums, int target) {
+    public static int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {
@@ -45,7 +45,7 @@ public class LeetCodeArrays {
      * @param val
      * @return
      */
-    public int removeElement(int[] nums, int val) {
+    public static int removeElement(int[] nums, int val) {
         if(nums==null||nums.length==0){
             return 0;
         }
@@ -139,6 +139,107 @@ public class LeetCodeArrays {
         return k + 1;
     }
 
+    /**
+     * 6.Find All Numbers Disappeared in an Array
+     * 
+     * 时间复杂度O(n)
+     * @param nums
+     * @return
+     */
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+        List <Integer> result=new ArrayList<>();
+        if(nums==null||nums.length<2){
+            return result;
+        }
+        int len=nums.length;
+        for(int i=0;i<len;i++){//n
+            result.add(nums[i]);
+            nums[i]=0;
+        }
+        
+        for(int i=0;i<len;i++){//n
+            int a=result.get(i);
+            nums[a-1]=a;
+        }
+        result.clear();
+        for(int i=0;i<len;i++){//n
+            if(nums[i]==0){
+                result.add(i+1);
+            }
+        }
+        
+      
+        return result;
+    }
+    
+    /**
+     * 7.Max Consecutive Ones
+     * 
+     * 二进制数值，找到连续的最长的1。
+     * @param nums
+     * @return
+     */
+    public static int findMaxConsecutiveOnes(int[] nums) {
+        if(nums==null||nums.length==0){
+            return 0;
+        }
+        
+        int result=0;
+        int start=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==1){
+                start++;
+            }else{
+                if(result<start){
+                    result=start;
+                }
+                start=0;
+            }
+        }
+        if(result<start){//如果到最后一直没有遇到0，start>0。
+            result=start;
+        }
+        return result;
+    }
+    /**
+     * 8.Find All Duplicates in an Array
+     * 
+     *  此题目是 {@link #findDisappearedNumbers(int[])}的变种,时间复杂度同样是O{n}。
+     * @param nums
+     * @return
+     */
+    public static List<Integer> findDuplicates(int[] nums) {
+        List <Integer> result=new ArrayList<>();
+        if(nums==null||nums.length<2){
+            return result;
+        }
+        int len=nums.length;
+        for(int i=0;i<len;i++){//n
+            result.add(nums[i]);
+            nums[i]=0;
+        }
+        
+        for(int i=0;i<len;i++){//n
+            int a=result.get(i);
+            if(nums[a-1]!=0){
+                nums[a-1]=-1;//重复的数字，变为-1
+            }else{
+                nums[a-1]=a;
+            }
+            
+        }
+        result.clear();
+        for(int i=0;i<len;i++){//n
+            if(nums[i]==-1){
+                result.add(i+1);
+            }
+        }
+        
+      
+        return result;
+    }
+    
+    
     /**
      * Single Nubmer Given an array of integers, every element appears twice
      * except for one. Find that single one. int
