@@ -13,7 +13,7 @@ import java.util.Map;
  * @author zhangshao
  */
 public class LeetCodeArrays {
- 
+
     /**
      * 1¡¢Two Sum
      * 
