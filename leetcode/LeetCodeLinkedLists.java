@@ -1,4 +1,10 @@
 package com.zs.leetcode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Tag 链表
  * @author zhangshao
@@ -212,5 +218,160 @@ public class LeetCodeLinkedLists {
         
         return head;
     }
+    /**
+     * 4. Merge Two Sorted Lists
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        
+        ListNode resultNode=null;
+        ListNode list1=l1,list2=l2;
+        int tempVal=0;
+        ListNode tempNode=null;
+        while(list1!=null||list2!=null){
+            if(list1!=null&&list2!=null){
+                int val1=list1.val;
+                int val2=list2.val;
+                if(val1<=val2){
+                    tempVal=val1;
+                    list1=list1.next;
+                }else{
+                    tempVal=val2;
+                    list2=list2.next;
+                }
+                
+            }else{
+                if(list1!=null){
+                    tempVal=list1.val;
+                    list1=list1.next;
+                }
+                if(list2!=null){
+                    tempVal=list2.val;
+                    list2=list2.next;
+                }
+            }
+            if(resultNode==null){
+                resultNode=new ListNode(tempVal);
+                tempNode=resultNode;
+            }else{
+                final ListNode next=new ListNode(tempVal);
+                tempNode.next=next;
+                tempNode=next;
+            }
+            
+        }
+        
+        return resultNode;
+    }
+    /**
+     * 5. Merge k Sorted Lists
+     * @param lists
+     * @return
+     */
+    public static ListNode mergeKLists(ListNode[] lists) {
+        if(lists==null||lists.length==0){
+            return null;
+        }
+        Map <Integer,ListNode> maps=new HashMap<>();
+        for(int i=0;i<lists.length;i++){
+            ListNode node=lists[i];
+            while(node!=null){
+                ListNode item=maps.get(node.val);
+                if(item!=null){
+                    while(item!=null){
+                        if(item.next==null){
+                            item.next=new ListNode(node.val);
+                            break;
+                        }else{
+                            item=item.next;
+                        }
+                    }
+                }else{
+                    maps.put(node.val, new ListNode(node.val));
+                }
+                node=node.next;
+                
+            }
+            
+        }
+        if(maps.isEmpty()){
+            return null;
+        }
+        Set<Integer> set=maps.keySet();
+        int min=set.iterator().next();
+        int max=min;
+        for(Integer key:set){//n*n
+            if(min>key){
+                min=key;
+            }
+            if(max<key){
+                max=key;
+            }
+        }
+        ListNode resultNode=null;
+        ListNode tempNode=null;
+        for(int i=min;i<=max;i++){
+            ListNode node=maps.get(i);
+            while(node!=null){
+                if(resultNode==null){
+                    resultNode=node;
+                    tempNode=resultNode;
+                }else{
+                    tempNode.next=node;
+                    tempNode=node;
+                }
+                node=node.next;
+            }
+        }
+        return resultNode;
+    }
     
+    /**
+     * 6. Swap Nodes in Pairs
+     * 要求：空间复杂度 O(1),并且不能换每项listnode的值。
+     * @param head
+     * @return
+     */
+    public static ListNode swapPairs(ListNode head) {
+        if(head==null){
+            return null;
+        }
+        ListNode tempNode=head;
+        ListNode returnLast=null;
+        while(tempNode!=null){
+            if(returnLast==null){//第一次循环
+                if(tempNode.next!=null){
+                    ListNode f=tempNode.next;
+                    ListNode s=tempNode;
+                    tempNode=tempNode.next.next;
+                    head=f;
+                    head.next=s;
+                    head.next.next=null;
+                    returnLast=head.next;
+                }else{
+                    return head;
+                }
+            }else{
+                if(tempNode.next!=null){
+                    ListNode f=tempNode.next;
+                    ListNode s=tempNode;
+                    tempNode=tempNode.next.next;
+                    
+                    returnLast.next=f;
+                    returnLast=returnLast.next;
+                    returnLast.next=s;
+                    returnLast.next.next=null;
+                    returnLast=returnLast.next;
+                    
+                }else{
+                    returnLast.next=tempNode;
+                    break;
+                }
+            }
+            
+        }
+        return head;
+    }
 }
