@@ -374,4 +374,59 @@ public class LeetCodeLinkedLists {
         }
         return head;
     }
+    /**
+     * 7. Rotate List
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+    	if(head==null||k<0){//leetcode在线结果当k<0，返回 null.
+        	return null;
+        }
+        int len=0;
+        
+        ListNode tempNode=head;
+        ListNode endNode=tempNode;
+        while(tempNode!=null){
+        	tempNode=tempNode.next;
+        	len++;
+        	if(endNode.next==null){
+        		continue;
+        	}
+        	endNode=endNode.next;
+        }
+        endNode.next=head;//末节点next指向头节点。
+        
+        int len_k=len-k%len;
+        tempNode=head;
+        while(len_k>1){
+        	len_k--;
+        	tempNode=tempNode.next;
+        }
+        ListNode resultNode=tempNode.next;
+        tempNode.next=null;
+        return resultNode;
+    }
+    /**
+     * 8. Remove Duplicates from Sorted List
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head==null){
+        	return null;
+        }
+    	ListNode tempNode=head;
+    	while(tempNode!=null){
+    		if(tempNode.next!=null){
+    			if(tempNode.val==tempNode.next.val){
+    				tempNode.next=tempNode.next.next;
+    				continue;//tempNode不变
+    			}
+    		}
+    		tempNode=tempNode.next;
+    	}
+    	return head;
+    }
 }
