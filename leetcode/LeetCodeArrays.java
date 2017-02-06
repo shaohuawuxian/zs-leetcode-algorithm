@@ -238,8 +238,50 @@ public class LeetCodeArrays {
       
         return result;
     }
-    
-    
+    /**
+     * 9. Third Maximum Number
+     * @param nums
+     * @return
+     */
+    public int thirdMax(int[] nums) {
+        int max=nums[0];
+        int min=nums[0];
+        
+        for(int i=1;i<nums.length;i++){
+            if(max<nums[i]){
+                max=nums[i];
+            }
+            if(min>nums[i]){
+                min=nums[i];
+            }
+        }
+        if(max==min){
+            return max;
+        }
+        int secondMax=min;
+        int thirdMax=min;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]<max){
+                if(secondMax<nums[i]){
+                    secondMax=nums[i];
+                }
+            }
+        }
+        if(max==secondMax){
+            return max;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]<secondMax){
+                if(thirdMax<nums[i]){
+                    thirdMax=nums[i];
+                }
+            }
+        }
+        if(secondMax==thirdMax){
+            return max;
+        }
+        return thirdMax;
+    }
     /**
      * Single Nubmer Given an array of integers, every element appears twice
      * except for one. Find that single one. int
