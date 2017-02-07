@@ -283,6 +283,75 @@ public class LeetCodeArrays {
         return thirdMax;
     }
     /**
+     * 10.Teemo Attacking
+     * @param timeSeries
+     * @param duration
+     * @return
+     */
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        if(timeSeries==null){
+            return 0;
+        }
+        int totalTime=0;
+        for(int i=0,len=timeSeries.length;i<len;i++){
+            if(i!=len-1){
+                int k=timeSeries[i+1]-timeSeries[i];
+                if(k<duration){
+                    totalTime+=k;
+                }else{
+                    totalTime+=duration;
+                }
+            }else{
+                totalTime+=duration;
+            }
+        }
+        
+        return totalTime;
+    }
+    /**
+     * 11. Move Zeroes
+     * @param nums
+     */
+    public void moveZeroes(int[] nums) {
+        if(nums==null){
+            return;
+        }
+        
+        for(int i=0,len=nums.length;i<len;i++){
+            
+            if(nums[i]==0){
+                continue;
+            }
+            for(int j=i-1;j>=0;j--){
+                if(nums[j]!=0){
+                    break;
+                }
+                int temp=nums[j+1];
+                nums[j+1]=0;
+                nums[j]=temp;
+                
+            }
+        }
+    }
+    /**
+     * 12. Missing Number
+     * @param nums
+     * @return
+     */
+    public int missingNumber(int[] nums) {
+        if(nums==null){
+            return 0;
+        }
+        int len=nums.length;
+        int sum=len*(len+1)/2;
+        int numsSum=0;
+        for(int i=0;i<len;i++){
+            numsSum+=nums[i];
+        }
+        
+        return sum-numsSum;
+    }
+    /**
      * Single Nubmer Given an array of integers, every element appears twice
      * except for one. Find that single one. int
      * []numbers={1,3,1,4,4,3,7,6,0,-1,-1,6,0} return 7; 思路：根据位运算a^a=0
